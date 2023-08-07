@@ -28,11 +28,17 @@ ResourceMgr::~ResourceMgr()
 		//delete pair.second;
 	}
 	mapAnimationClip.clear();
+	//±è¹ÎÁö, 230807, Ãß°¡
+	mapImagePos.clear();
+	//
 }
 
 void ResourceMgr::Init()
 {
-	LoadFromCSV("tables/defalutResource.csv", true);
+	// ±è¹ÎÁö, 230807, Æú´õ ¼öÁ¤
+	//LoadFromCSV("tables/defalutResource.csv", true);
+	LoadFromCSV("scripts/defaultResourceList.csv", true);
+	//
 }
 
 void ResourceMgr::UnLoadAll()
@@ -130,16 +136,33 @@ void ResourceMgr::UnLoadAll()
 
 void ResourceMgr::LoadFromCSV(const string path, bool isDefault)
 {
+	// ±è¹ÎÁö, 230807, ¼öÁ¤
+	// ±âÁ¸ÄÚµå
+	//rapidcsv::Document doc(path);
+	//vector<int>types = doc.GetColumn<int>(0);
+	//vector<string> paths = doc.GetColumn<string>(1);
+	//for (int i = 0; i < types.size(); i++)
+	//{
+	//	Load((ResourceTypes)types[i], paths[i], isDefault);
+	//}
+	//
+	// ¼öÁ¤ ÄÚµå
 	rapidcsv::Document doc(path);
 	vector<int>types = doc.GetColumn<int>(0);
 	vector<string> paths = doc.GetColumn<string>(1);
+	vector<string> name = doc.GetColumn<string>(2);
+	vector<int> left = doc.GetColumn<int>(3);
+	vector<int> top = doc.GetColumn<int>(4);
+	vector<int> width = doc.GetColumn<int>(5);
+	vector<int> height = doc.GetColumn<int>(6);
 	for (int i = 0; i < types.size(); i++)
 	{
-		Load((ResourceTypes)types[i], paths[i], isDefault);
+		Load((ResourceTypes)types[i], paths[i], name[i], left[i], top[i], width[i], height[i], isDefault);
 	}
+	//
 }
 
-void ResourceMgr::Load(ResourceTypes t, const std::string path, bool isDefault)
+void ResourceMgr::Load(ResourceTypes t, std::string path, std::string name, int left, int top, int width, int height, bool isDefault)
 {
 	switch (t)
 	{
@@ -151,6 +174,11 @@ void ResourceMgr::Load(ResourceTypes t, const std::string path, bool isDefault)
 			auto texture = new sf::Texture();
 			texture->loadFromFile(path);
 			mapTexture.insert({ path, {texture, isDefault} });
+		}
+		auto it2 = mapImagePos.find(name);
+		if (mapImagePos.end() == it2)
+		{
+			mapImagePos.insert({ name, sf::IntRect{left, top, width, height} });
 		}
 	}
 	break;
@@ -188,9 +216,60 @@ void ResourceMgr::Load(ResourceTypes t, const std::string path, bool isDefault)
 	}
 	break;
 	}
-
-
 }
+
+//void ResourceMgr::Load(ResourceTypes t, const std::string path, bool isDefault)
+//{
+//	switch (t)
+//	{
+//	case ResourceTypes::Texture:
+//	{
+//		auto it = mapTexture.find(path);
+//		if (mapTexture.end() == it)
+//		{
+//			auto texture = new sf::Texture();
+//			texture->loadFromFile(path);
+//			mapTexture.insert({ path, {texture, isDefault} });
+//		}
+//	}
+//	break;
+//	case ResourceTypes::Font:
+//	{
+//		auto it = mapFont.find(path);
+//		if (mapFont.end() == it)
+//		{
+//			auto font = new sf::Font();
+//			font->loadFromFile(path);
+//			mapFont.insert({ path, { font, isDefault } });
+//		}
+//	}
+//	break;
+//	case ResourceTypes::SoundBuffer:
+//	{
+//		auto it = mapSoundBuffer.find(path);
+//		if (mapSoundBuffer.end() == it)
+//		{
+//			auto sb = new sf::SoundBuffer();
+//			sb->loadFromFile(path);
+//			mapSoundBuffer.insert({ path, { sb, isDefault } });
+//		}
+//	}
+//	break;
+//	case ResourceTypes::AnimationClip:
+//	{
+//		auto it = mapAnimationClip.find(path);
+//		if (mapAnimationClip.end() == it)
+//		{
+//			auto clip = new AnimationClip();
+//			clip->LoadFromFile(path);
+//			mapAnimationClip.insert({ path, { clip, isDefault} });
+//		}
+//	}
+//	break;
+//	}
+//
+//
+//}
 
 //void ResourceMgr::Load(const std::vector<std::tuple<ResourceTypes, std::string>>& array)
 //{
@@ -212,6 +291,13 @@ void ResourceMgr::Unload(ResourceTypes t, const std::string id)
 			delete get<0>(it->second);
 			mapTexture.erase(it);
 		}
+		// ±è¹ÎÁö, 230807, Ãß°¡
+		auto it2 = mapImagePos.find(id);
+		if (it2 != mapImagePos.end())
+		{
+			mapImagePos.erase(it2);
+		}
+		//
 	}
 	break;
 	case ResourceTypes::Font:
@@ -284,6 +370,17 @@ sf::Texture* ResourceMgr::GetTexture(const std::string& id)
 		return get<0>(it->second);
 	}
 	return nullptr;
+}
+
+sf::IntRect ResourceMgr::GetTextureRect(const std::string& name)
+{
+	auto it = mapImagePos.find(name);
+	if (it != mapImagePos.end())
+	{
+		return it->second;
+	}
+	std::cout << "ERR: can't find single image" << std::endl;
+	return { 0,0,0,0 };
 }
 
 sf::Font* ResourceMgr::GetFont(const std::string& id)

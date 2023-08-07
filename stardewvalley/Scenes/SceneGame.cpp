@@ -15,7 +15,11 @@
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
 	//csv파일을 통해서 로딩하는 것으로 변경
-	resourceListPath = "tables/SceneGameResourceList.csv";
+	
+	// 김민지, 230807, 폴더 수정
+	//resourceListPath = "tables/SceneGameResourceList.csv";
+	resourceListPath = "scripts/defaultResourceList.csv";
+	//
 
 	/*resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/RubySheet.png"));
 	resources.push_back(std::make_tuple(ResourceTypes::Texture, "graphics/sprite_sheet.png"));
@@ -34,46 +38,60 @@ void SceneGame::Init()
 	sf::Vector2f centerPos = size * 0.5f;
 	
 	worldView.setSize(size);
-	worldView.setCenter(centerPos);
-	sf::Vector2f tileWorldSize = { 50.f, 50.f };
-	sf::Vector2f tileTexSize = { 50.f ,50.f };
-	background = CreateBackGround({ 100, 100 }, { 50.f, 50.f }, { 50.f, 50.f }, "graphics/background_sheet.png");
-	AddGo(background);
-	
-	player2 = (Player2*)AddGo(new Player2());
+	// 김민지, 230807, 테스트용 센터 변경
+	worldView.setCenter(0,0);
+	//
 
-	UiButton* button = (UiButton*)AddGo(new UiButton("graphics/TitleButtons1.png", "button"));
-	button->sprite.setScale(2.0f, 2.0f);
-	button->SetOrigin(Origins::TR);
-	button->sortLayer = 100;
-	button->SetPosition(size.x, 0);
-	button->OnEnter = [button]()
-	{
-		cout << "Enter" << endl;
-		sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/TitleButtons2.png");
-		button->sprite.setTexture(*tex);
-	};
-	button->OnExit = [button]()
-	{
-		cout << "OnExit" << endl;
-		sf::Texture* tex = RESOURCE_MGR.GetTexture(button->textureId);
-		button->sprite.setTexture(*tex);
-	};
-	button->OnClick = [this]()
-	{
-		SCENE_MGR.ChangeScene(sceneId);
-		cout << "OnClick" << endl;
-	};
+	// 김민지, 230807, 테스트용 주석처리
+	//sf::Vector2f tileWorldSize = { 50.f, 50.f };
+	//sf::Vector2f tileTexSize = { 50.f ,50.f };
+	//background = CreateBackGround({ 100, 100 }, { 50.f, 50.f }, { 50.f, 50.f }, "graphics/background_sheet.png");
+	//AddGo(background);
+	//player2 = (Player2*)AddGo(new Player2());
+	//UiButton* button = (UiButton*)AddGo(new UiButton("graphics/TitleButtons1.png", "button"));
+	//button->sprite.setScale(2.0f, 2.0f);
+	//button->SetOrigin(Origins::TR);
+	//button->sortLayer = 100;
+	//button->SetPosition(size.x, 0);
+	//button->OnEnter = [button]()
+	//{
+	//	cout << "Enter" << endl;
+	//	sf::Texture* tex = RESOURCE_MGR.GetTexture("graphics/TitleButtons2.png");
+	//	button->sprite.setTexture(*tex);
+	//};
+	//button->OnExit = [button]()
+	//{
+	//	cout << "OnExit" << endl;
+	//	sf::Texture* tex = RESOURCE_MGR.GetTexture(button->textureId);
+	//	button->sprite.setTexture(*tex);
+	//};
+	//button->OnClick = [this]()
+	//{
+	//	SCENE_MGR.ChangeScene(sceneId);
+	//	cout << "OnClick" << endl;
+	//};
+	//
+
+	// 김민지, 230807, 테스트용 추가
+	player2 = (Player2*)AddGo(new Player2());
+	AddGo(new SpriteGo("graphics/TitleButtons.ko-KR.png", "logo", "logo"));
+	SpriteGo* logo = (SpriteGo*)FindGo("logo");
+	logo->SetOrigin(Origins::MC);
+	logo->SetPosition(0, 0);
+	//
+
 	for (auto go : gameObjects)
 	{
 		go->Init();
 	}
 
-	background->sortLayer = -1;
-	background->SetOrigin(Origins::MC);
-	background->SetPosition(centerPos);
+	//background->sortLayer = -1;
+	//background->SetOrigin(Origins::MC);
+	//background->SetPosition(centerPos);
 
-	wallBounds = background->vertexArray.getBounds();
+	//wallBounds = background->vertexArray.getBounds();
+	//
+
 	//player->SetWallBounds(wallBounds);
 
 	//player->sortLayer = 1;
@@ -98,8 +116,10 @@ void SceneGame::Enter()
 
 	Scene::Enter();
 
-	player2->SetOrigin(Origins::MC);
-	player2->SetPosition(centerPos);
+	// 김민지, 230807, 테스트용 주석처리
+	//player2->SetOrigin(Origins::MC);
+	//player2->SetPosition(centerPos);
+	//
 }
 
 void SceneGame::Exit()
@@ -110,7 +130,10 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
-	worldView.setCenter(player2->GetPosition());
+	
+	// 김민지, 230807, 테스트용 주석처리
+	//worldView.setCenter(player2->GetPosition());
+	//
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
