@@ -1,16 +1,8 @@
 #include "stdafx.h"
 #include "SceneMgr.h"
-#include "Scene.h"
-#include "SceneTitle.h"
 #include "SceneGame.h"
-
-void SceneMgr::ChangeScene(SceneId id)
-{
-	currentScene->Exit(); //현재 열려있는 씬 종료
-	currentSceneId = id; 
-	currentScene = scenes[(int)currentSceneId];
-	currentScene->Enter(); //새로 열 씬 시작
-}
+#include "DataTableMgr.h"
+#include "StringTable.h"
 
 void SceneMgr::Init()
 {
@@ -18,17 +10,19 @@ void SceneMgr::Init()
 	{
 		Release();
 	}
-	scenes.push_back(new SceneTitle());
+
 	scenes.push_back(new SceneGame());
 
 	for (auto scene : scenes)
 	{
-		scene->Init(); //각 씬 초기화
+		scene->Init();
 	}
 
-	currentSceneId = startSceneId; //현재 씬을 시작 씬 id로 초기화
+	currentSceneId = startSceneId;
 	currentScene = scenes[(int)currentSceneId];
-	currentScene->Enter(); //현재(시작) 씬 시작
+	currentScene->Enter();
+
+
 }
 
 void SceneMgr::Release()
@@ -37,17 +31,19 @@ void SceneMgr::Release()
 	{
 		return;
 	}
+
 	for (auto scene : scenes)
 	{
-		delete scene; 
+		//scene->Release();
+		delete scene;
 	}
-	scenes.clear(); //벡터 비워주기
+	scenes.clear();
 
 	currentSceneId = SceneId::None;
 	currentScene = nullptr;
 }
 
-void SceneMgr::Update(float dt)
+void SceneMgr::UpdateEvent(float dt)
 {
 	currentScene->Update(dt);
 }
@@ -55,4 +51,17 @@ void SceneMgr::Update(float dt)
 void SceneMgr::Draw(sf::RenderWindow& window)
 {
 	currentScene->Draw(window);
+}
+
+void SceneMgr::ChangeScene(SceneId id)
+{
+	currentScene->Exit();
+	currentSceneId = id;
+	currentScene = scenes[(int)currentSceneId];
+	currentScene->Enter();
+}
+
+Scene* SceneMgr::GetCurrScene() const
+{
+	return currentScene;
 }

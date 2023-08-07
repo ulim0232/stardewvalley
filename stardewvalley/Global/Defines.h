@@ -1,18 +1,13 @@
 #pragma once
 
-enum class SceneId
-{
-	None = -1,
-	Title,
-	Game,
-	Count
-};
+#define _USE_MATH_DEFINES
 
-enum class ResourceTypes
+enum class Languages
 {
-	Texture,
-	Font,
-	SoundBuffer
+	KOR,
+	ENG,
+	JP,
+	COUNT,
 };
 
 enum class Origins
@@ -26,5 +21,27 @@ enum class Origins
 	BL,
 	BC,
 	BR,
-	CUSTOM //임의의 origin을 가지는 것들
+	CUSTOM,
 };
+
+enum class ResourceTypes
+{
+	Texture,
+	Font,
+	SoundBuffer,
+	AnimationClip,
+};
+
+enum class SceneId
+{
+	None = -1,
+	Game,
+	Count,
+};
+
+enum class MotionId
+{
+	Idle,
+	Move
+};
+#include "AnimationClip.h"

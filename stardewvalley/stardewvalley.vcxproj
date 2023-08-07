@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./SFML-2.5.1/include;./Global;./Framework;./Scenes;./Gameobjects;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./3rd;./DataTables;./SFML-2.5.1/include;./Global;./Framework;./Scenes;./GameObjects;./Animation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -140,7 +140,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./SFML-2.5.1/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./3rd;./DataTables;./SFML-2.5.1/include;./Global;./Framework;./Scenes;./GameObjects;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,36 +153,66 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation\AnimationClip.cpp" />
+    <ClCompile Include="Animation\AnimationController.cpp" />
+    <ClCompile Include="DataTables\ClipTable.cpp" />
+    <ClCompile Include="DataTables\DataTable.cpp" />
+    <ClCompile Include="DataTables\StringTable.cpp" />
+    <ClCompile Include="Framework\DataTableMgr.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
-    <ClCompile Include="Gameobjects\GameObject.cpp" />
+    <ClCompile Include="GameObjects\GameObject.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player2.cpp" />
+    <ClCompile Include="GameObjects\RectangleGo.cpp" />
+    <ClCompile Include="GameObjects\SpriteEffect.cpp" />
+    <ClCompile Include="GameObjects\VertexArrayGo.cpp" />
     <ClCompile Include="Global\Utils.cpp" />
+    <ClCompile Include="GameObjects\Ground.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Scenes\ResourceMgr.cpp" />
+    <ClCompile Include="Framework\ResourceMgr.cpp" />
+    <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />
     <ClCompile Include="Scenes\SceneGame.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
-    <ClCompile Include="Scenes\SceneTitle.cpp" />
-    <ClCompile Include="Gameobjects\SpriteGo.cpp" />
+    <ClCompile Include="GameObjects\SpriteGo.cpp" />
     <ClCompile Include="Global\Variables.cpp" />
+    <ClCompile Include="GameObjects\UiButton.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Gameobjects\GameObject.h" />
+    <ClInclude Include="3rd\rapidcsv.h" />
+    <ClInclude Include="Animation\AnimationController.h" />
+    <ClInclude Include="Animation\AnimationClip.h" />
+    <ClInclude Include="DataTables\ClipTable.h" />
+    <ClInclude Include="DataTables\DataTable.h" />
+    <ClInclude Include="DataTables\StringTable.h" />
+    <ClInclude Include="Framework\DataTableMgr.h" />
+    <ClInclude Include="Framework\ObjectPool.h" />
+    <ClInclude Include="GameObjects\GameObject.h" />
+    <ClInclude Include="GameObjects\Player2.h" />
+    <ClInclude Include="GameObjects\RectangleGo.h" />
+    <ClInclude Include="GameObjects\SpriteEffect.h" />
+    <ClInclude Include="GameObjects\VertexArrayGo.h" />
     <ClInclude Include="Global\Defines.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\InputMgr.h" />
+    <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Global\Utils.h" />
-    <ClInclude Include="Scenes\ResourceMgr.h" />
+    <ClInclude Include="GameObjects\Player.h" />
+    <ClInclude Include="GameObjects\Ground.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\SceneGame.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
-    <ClInclude Include="Scenes\SceneTitle.h" />
     <ClInclude Include="Global\Singleton.h" />
-    <ClInclude Include="Global\stdafx.h" />
-    <ClInclude Include="Gameobjects\SpriteGo.h" />
+    <ClInclude Include="GameObjects\SpriteGo.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="Global\Variables.h" />
+    <ClInclude Include="GameObjects\UiButton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
