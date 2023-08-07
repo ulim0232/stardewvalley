@@ -108,13 +108,13 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
+	Scene::Enter();
 	auto size = FRAMEWORK.GetWindowSize();
 	sf::Vector2f centerPos = size * 0.5f;
 
 	uiView.setSize(size);
 	uiView.setCenter(centerPos);
 
-	Scene::Enter();
 
 	// 김민지, 230807, 테스트용 주석처리
 	//player2->SetOrigin(Origins::MC);
