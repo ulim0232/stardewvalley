@@ -15,6 +15,7 @@ public:
 
 protected:
 	AnimationController animation;
+	
 	sf::Vector2f direction;
 	float speed = 500.f;
 
@@ -23,6 +24,7 @@ protected:
 
 	std::vector<ClipInfo> clipInfos;
 	ClipInfo currentClipInfo;
+
 
 public:
 	Player2(const std::string& textureId = "", const std::string& n = "")
@@ -35,5 +37,5 @@ public:
 
 	bool GetFlipX() const;
 	void SetFlipX(bool filp);
-};
+};//스프라이트 객체 2개사용
 

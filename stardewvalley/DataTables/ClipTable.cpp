@@ -5,8 +5,8 @@
 bool ClipTable::Load()
 {
 	vector<string> filenames; //data table의 경로 저장
-	filenames.push_back("tables/IdleClipTable.csv");
-	filenames.push_back("tables/MoveClipTable.csv");
+	/*filenames.push_back("tables/IdleClipTable.csv");
+	filenames.push_back("tables/MoveClipTable.csv");*/
 
 	for (int i = 0; i < tables.size(); i++)
 	{

@@ -11,6 +11,7 @@
 #include "VertexArrayGo.h"
 #include "Player2.h"
 #include "UiButton.h"
+#include "Farmer.h"
 
 SceneGame::SceneGame() : Scene(SceneId::Game)
 {
@@ -40,7 +41,7 @@ void SceneGame::Init()
 	background = CreateBackGround({ 100, 100 }, { 50.f, 50.f }, { 50.f, 50.f }, "graphics/background_sheet.png");
 	AddGo(background);
 	
-	player2 = (Player2*)AddGo(new Player2());
+	player = (Farmer*)AddGo(new Farmer());
 
 	UiButton* button = (UiButton*)AddGo(new UiButton("graphics/TitleButtons1.png", "button"));
 	button->sprite.setScale(2.0f, 2.0f);
@@ -90,16 +91,16 @@ void SceneGame::Release()
 
 void SceneGame::Enter()
 {
+	Scene::Enter();
 	auto size = FRAMEWORK.GetWindowSize();
 	sf::Vector2f centerPos = size * 0.5f;
 
 	uiView.setSize(size);
 	uiView.setCenter(centerPos);
 
-	Scene::Enter();
 
-	player2->SetOrigin(Origins::MC);
-	player2->SetPosition(centerPos);
+	player->SetOrigin(Origins::MC);
+	player->SetPosition(centerPos);
 }
 
 void SceneGame::Exit()
@@ -110,7 +111,7 @@ void SceneGame::Exit()
 void SceneGame::Update(float dt)
 {
 	Scene::Update(dt);
-	worldView.setCenter(player2->GetPosition());
+	worldView.setCenter(player->GetPosition());
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)

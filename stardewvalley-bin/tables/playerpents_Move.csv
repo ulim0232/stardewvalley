@@ -1,0 +1,8 @@
+﻿ID,FPS,LOOPTYPE,,
+Move,6,1,,
+,,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT
+graphics/pants.png,4,102,8,27
+graphics/pants.png,4,5,8,27
+graphics/pants.png,20,102,8,27
+graphics/pants.png,4,5,8,27

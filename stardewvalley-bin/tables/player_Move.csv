@@ -1,0 +1,8 @@
+﻿ID,FPS,LOOPTYPE,,
+Move,6,1,,
+,,,,
+TEXTURE ID,LEFT,TOP,WIDTH,HEIGHT
+graphics/farmer_base.png,3,103,10,27
+graphics/farmer_base.png,3,5,10,27
+graphics/farmer_base.png,19,103,10,27
+graphics/farmer_base.png,3,5,10,27
